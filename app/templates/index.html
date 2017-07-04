@@ -6,6 +6,9 @@
   <textarea rows="5" cols="50"></textarea><br>
   <button>つぶやく</button>
 </form>
+{% if words %}
+  <p>「{{ words }}」 とツイートしました。</p>
+{% endif %}
 
 <hr>
 <h3>これはなにか</h3>
