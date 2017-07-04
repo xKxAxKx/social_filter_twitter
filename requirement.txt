@@ -1,0 +1,4 @@
+# pip install -r requirement.txt
+django
+requests
+requests_oauthlib
