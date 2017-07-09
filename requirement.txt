@@ -2,3 +2,4 @@
 django
 requests
 requests_oauthlib
+python-social-auth[django]
