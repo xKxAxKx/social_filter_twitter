@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app',
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -63,10 +64,21 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
 ]
+
+AUTHENTICATION_BACKENDS = [
+    'social_core.backends.twitter.TwitterOAuth',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+# ここを編集すること
+SOCIAL_AUTH_TWITTER_KEY = 'Consumer Key'
+SOCIAL_AUTH_TWITTER_SECRET = 'Consumer Secret'
 
 WSGI_APPLICATION = 'social_filter_twitter.wsgi.application'
 
