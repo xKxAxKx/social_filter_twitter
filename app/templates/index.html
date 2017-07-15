@@ -1,13 +1,13 @@
 <h2>社会性フィルター付きTwitterクライアント</h2>
 
-<p>Twitterでログインする</p>
+<a href="/">Twitterでログインする</a>
 
 <form>
   <textarea rows="5" cols="50"></textarea><br>
   <button>つぶやく</button>
 </form>
-{% if words %}
-  <p>「{{ words }}」 とツイートしました。</p>
+{% if tweet %}
+  <p>「{{ tweet }}」 とツイートしました。</p>
 {% endif %}
 
 <hr>

@@ -8,11 +8,11 @@ sys.stdout = codecs.getwriter("utf-8")(sys.stdout)
 
 from django.http.response import HttpResponse
 from django.shortcuts import render
+from django.views.generic import TemplateView
 
-def index(request):
-    return render(request,
-        'index.html',
-    )
+class index(TemplateView):
+    template_name = "index.html"
 
-def tweet(tweet):
-    pass
+    def login(self, request, **kwargs):
+        tweet = "hogehoge"
+        return self.render_to_response(tweet)
