@@ -13,6 +13,9 @@ from django.views.generic import TemplateView
 class index(TemplateView):
     template_name = "index.html"
 
-    def login(self, request, **kwargs):
-        tweet = "hogehoge"
-        return self.render_to_response(tweet)
+
+def login(request):
+    pass
+
+def tweet(request):
+    pass

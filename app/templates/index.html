@@ -2,12 +2,12 @@
 
 <a href="/">Twitterでログインする</a>
 
-<form>
+<form method="POST">
   <textarea rows="5" cols="50"></textarea><br>
   <button>つぶやく</button>
 </form>
-{% if tweet %}
-  <p>「{{ tweet }}」 とツイートしました。</p>
+{% if words %}
+  <p>「{{ words }}」 とツイートしました。</p>
 {% endif %}
 
 <hr>
