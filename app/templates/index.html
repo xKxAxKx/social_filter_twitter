@@ -1,10 +1,16 @@
 <h2>社会性フィルター付きTwitterクライアント</h2>
 
-<a href="/">Twitterでログインする</a>
+<!-- 未ログイン時 -->
+<button type="button" onclick="location.href='{% url 'social:begin' 'twitter' %}'">Twitterでログイン</button>
 
+<!-- ログイン時はユーザ名を表示 -->
+<p>@{{ account_name }}でログインしています</p>
+<button type="button" onclick="location.href='{% url 'social:begin' 'twitter' %}'">ログアウト</button>
+<hr>
+<!-- 未ログイン時は非表示 -->
 <form method="POST">
   <textarea rows="5" cols="50"></textarea><br>
-  <button>つぶやく</button>
+  <button >つぶやく</button>
 </form>
 {% if words %}
   <p>「{{ words }}」 とツイートしました。</p>
