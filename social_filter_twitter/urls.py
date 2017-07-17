@@ -7,5 +7,5 @@ import app.urls
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'', include('social_django.urls', namespace = 'social')),
-    url(r'^$', include(app.urls)),
+    url(r'^', include(app.urls)),
 ]
