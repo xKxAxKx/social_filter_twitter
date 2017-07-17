@@ -5,7 +5,10 @@
 
 <!-- ログイン時はユーザ名を表示 -->
 <p>@{{ account_name }}でログインしています</p>
-<button type="button" onclick="location.href='{% url 'social:begin' 'twitter' %}'">ログアウト</button>
+<form method="post" action="{% url 'social:disconnect' 'twitter' %}">
+  {% csrf_token %}
+  <button type="submit">ログアウト</button>
+</form>
 <hr>
 <!-- 未ログイン時は非表示 -->
 <form method="POST">
