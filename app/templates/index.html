@@ -3,22 +3,6 @@
 <!-- 未ログイン時 -->
 <button type="button" onclick="location.href='{% url 'social:begin' 'twitter' %}'">Twitterでログイン</button>
 
-<!-- ログイン時はユーザ名を表示 -->
-<p>@{{ account_name }}でログインしています</p>
-<form method="post" action="{% url 'social:disconnect' 'twitter' %}">
-  {% csrf_token %}
-  <button type="submit">ログアウト</button>
-</form>
-<hr>
-<!-- 未ログイン時は非表示 -->
-<form method="POST">
-  <textarea rows="5" cols="50"></textarea><br>
-  <button >つぶやく</button>
-</form>
-{% if words %}
-  <p>「{{ words }}」 とツイートしました。</p>
-{% endif %}
-
 <hr>
 <h3>これはなにか</h3>
 社会性フィルターを実装したつぶやきをすることができるやつ<br>

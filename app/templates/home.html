@@ -1,0 +1,19 @@
+<h2>社会性フィルター付きTwitterクライアント</h2>
+
+<p>@{{ account_name }}でログインしています</p>
+<form method="post" action="{% url 'social:disconnect' 'twitter' %}">
+  {% csrf_token %}
+  <button type="submit">ログアウト</button>
+</form>
+<hr>
+<!-- 未ログイン時は非表示 -->
+<form method="POST">
+  <textarea rows="5" cols="50"></textarea><br>
+  <button >つぶやく</button>
+</form>
+{% if words %}
+  <p>「{{ words }}」 とツイートしました。</p>
+{% endif %}
+<hr>
+<small>©︎2017 Hiromasa Kakutani</small><br>
+<small>連絡先:pekepooooong[a]gmail.com</small>

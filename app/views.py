@@ -16,11 +16,13 @@ class index(TemplateView):
 
 
 class home(TemplateView):
-    pass
+    template_name = "home.html"
 
 
-def login(request):
-    pass
+def logout(request):
+    return render(request,
+        'logout.html',
+    )
 
 
 def tweet(request):
