@@ -78,10 +78,14 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
-SOCIAL_AUTH_TWITTER_KEY = '**************'
-SOCIAL_AUTH_TWITTER_SECRET = '**************'
-ACCESS_TOKEN = '**************'
-ACCESS_TOKEN_SECRET = '**************'
+SOCIAL_AUTH_TWITTER_KEY = '****'
+SOCIAL_AUTH_TWITTER_SECRET = '****'
+ACCESS_TOKEN = '****'
+ACCESS_TOKEN_SECRET = '****'
+
+SOCIAL_AUTH_LOGIN_URL = '/'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/home'
+SOCIAL_AUTH_DISCONNECT_REDIRECT_URL = '/logout'
 
 WSGI_APPLICATION = 'social_filter_twitter.wsgi.application'
 
