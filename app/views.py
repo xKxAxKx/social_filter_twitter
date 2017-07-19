@@ -23,15 +23,9 @@ def home(request):
     if request.user.is_authenticated():
         account_name = request.user.username
     else:
-        account_name = None
+        return redirect('index')
 
     return render(request,
         'home.html',
         {"account_name": account_name}
-    )
-
-
-def logout(request):
-    return render(request,
-        'logout.html',
     )

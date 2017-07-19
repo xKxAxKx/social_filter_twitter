@@ -1,10 +1,7 @@
 <h2>社会性フィルター付きTwitterクライアント</h2>
 
 <p>@{{ account_name }}でログインしています</p>
-<form method="post" action="{% url 'social:disconnect' 'twitter' %}">
-  {% csrf_token %}
-  <button type="submit">ログアウト</button>
-</form>
+<button type="button" onclick="location.href='{% url 'logout' %}'">ログアウト</button>
 <hr>
 <!-- 未ログイン時は非表示 -->
 <form method="POST">
