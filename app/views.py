@@ -4,7 +4,7 @@ import re
 import os
 import requests
 import sys, codecs
-sys.stdout = codecs.getwriter("utf-8")(sys.stdout)
+# sys.stdout = codecs.getwriter("utf-8")(sys.stdout)
 
 from django.http import HttpResponseRedirect
 from django.http.response import HttpResponse
@@ -22,20 +22,21 @@ def index(request):
 
 @login_required
 def home(request):
-    if request.user.is_authenticated():
-        account_name = request.user.username
-        form = TweetForm
-        return render(request,
-            'home.html',
-            dict(account_name = account_name, form = form)
-        )
-    else:
-        return redirect('index')
-
     if request.method == 'POST':
-        form = ContactForm(request.POST)
-        tweet = request.POST['tweet']
-        import pdb; pdb.set_trace()
+        form = TweetForm(request.POST)
+        if form.is_valid():
+            tweet = request.POST['tweet']
+            import pdb; pdb.set_trace()
+    else:
+        if request.user.is_authenticated():
+            account_name = request.user.username
+            form = TweetForm
+            return render(request,
+                'home.html',
+                dict(account_name = account_name, form = form)
+            )
+        else:
+            return redirect('index')
 
 # ツイートを解析し、数値でネガティブ値を取得する
 def tweet_analysis(tweet):
