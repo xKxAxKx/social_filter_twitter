@@ -11,6 +11,8 @@ from django.http.response import HttpResponse
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required
+from django import forms
+from .forms import TweetForm
 
 def index(request):
     return render(request,
@@ -22,10 +24,23 @@ def index(request):
 def home(request):
     if request.user.is_authenticated():
         account_name = request.user.username
+        form = TweetForm
+        return render(request,
+            'home.html',
+            dict(account_name = account_name, form = form)
+        )
     else:
         return redirect('index')
 
-    return render(request,
-        'home.html',
-        {"account_name": account_name}
-    )
+    if request.method == 'POST':
+        print("hoge")
+
+
+# ツイートを解析し、数値でネガティブ値を取得する
+def tweet_analysis(tweet):
+    pass
+
+
+# 実際にtwitterにポストする関数
+def tweet(tweet):
+    pass
