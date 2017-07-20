@@ -33,8 +33,9 @@ def home(request):
         return redirect('index')
 
     if request.method == 'POST':
-        print("hoge")
-
+        form = ContactForm(request.POST)
+        tweet = request.POST['tweet']
+        import pdb; pdb.set_trace()
 
 # ツイートを解析し、数値でネガティブ値を取得する
 def tweet_analysis(tweet):

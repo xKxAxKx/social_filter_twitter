@@ -4,7 +4,7 @@
 <button type="button" onclick="location.href='{% url 'logout' %}'">ログアウト</button>
 <hr>
 <!-- 未ログイン時は非表示 -->
-<form action="/home/" method="POST">
+<form action="/home/" method="post">
   {{ form.as_p }}
   {% csrf_token %}
   <button >つぶやく</button>
