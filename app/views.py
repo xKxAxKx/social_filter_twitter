@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from requests_oauthlib import OAuth1Session
 import json
 import re
@@ -13,6 +14,7 @@ from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required
 from django import forms
 from .forms import TweetForm
+import MeCab
 
 def index(request):
     return render(request,
@@ -22,15 +24,23 @@ def index(request):
 
 @login_required
 def home(request):
+    account_name = request.user.username
+    form = TweetForm
+
     if request.method == 'POST':
         form = TweetForm(request.POST)
         if form.is_valid():
             tweet = request.POST['tweet']
-            import pdb; pdb.set_trace()
+            emotion_value = tweet_analysis(tweet)
+
+            print(emotion_value)
+
+            return render(request,
+                'home.html',
+                dict(account_name = account_name, form = form, tweet = tweet)
+            )
     else:
         if request.user.is_authenticated():
-            account_name = request.user.username
-            form = TweetForm
             return render(request,
                 'home.html',
                 dict(account_name = account_name, form = form)
@@ -41,6 +51,7 @@ def home(request):
 # ツイートを解析し、数値でネガティブ値を取得する
 def tweet_analysis(tweet):
     pass
+    # return emotion_value
 
 
 # 実際にtwitterにポストする関数

@@ -3,3 +3,4 @@ django
 requests
 requests_oauthlib
 python-social-auth[django]
+mecab-python3
