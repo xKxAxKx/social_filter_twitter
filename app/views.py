@@ -30,6 +30,7 @@ word_list = list(pn_df['Word'])
 pn_list = list(pn_df['PN'])  # 中身の型はnumpy.float64
 pn_dict = dict(zip(word_list, pn_list))
 
+
 def index(request):
     return render(request,
         'index.html',
@@ -48,14 +49,19 @@ def home(request):
             analyzed_tweet = tweet_mecab_analysis(tweet)
             tweet_pnvalue_list = add_pnvalue(analyzed_tweet)
             tweet_score = get_tweet_score(tweet_pnvalue_list)
-            print(tweet_score)
 
             if tweet_score == -0.41375900000000004 or tweet_score <= -0.661141:
                 tweet = "にゃーん"
 
+            message = '「{}」とツイートしました'.format(tweet)
+            # if tweet(tweet):
+            #     message = '「{}」とツイートしました'.format(tweet)
+            # else:
+            #     message = "ツイートに失敗しました"
+
             return render(request,
                 'home.html',
-                dict(account_name = account_name, form = form, tweet = tweet)
+                dict(account_name = account_name, form = form, message = message)
             )
     else:
         if request.user.is_authenticated():
@@ -112,4 +118,4 @@ def mean(numbers):
 
 # twitterにポストする
 def tweet(tweet):
-    pass
+    return True

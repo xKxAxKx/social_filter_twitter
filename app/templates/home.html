@@ -9,8 +9,8 @@
   {% csrf_token %}
   <button >つぶやく</button>
 </form>
-{% if tweet %}
-  <p>「{{ tweet }}」 とツイートしました。</p>
+{% if message %}
+  <p>{{ message }}</p>
 {% endif %}
 <hr>
 <small>©︎2017 Hiromasa Kakutani</small><br>
