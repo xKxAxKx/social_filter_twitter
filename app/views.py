@@ -14,7 +14,11 @@ from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required
 from django import forms
 from .forms import TweetForm
+
+# 形態素解析関連
 import MeCab
+mecab = MeCab.Tagger('-Ochasen')
+
 
 def index(request):
     return render(request,
@@ -31,9 +35,8 @@ def home(request):
         form = TweetForm(request.POST)
         if form.is_valid():
             tweet = request.POST['tweet']
-            emotion_value = tweet_analysis(tweet)
 
-
+            analyzed_tweet = tweet_mecab_analysis(tweet)
 
             return render(request,
                 'home.html',
@@ -48,10 +51,19 @@ def home(request):
         else:
             return redirect('index')
 
-# ツイートを解析し、数値でネガティブ値を取得する
-def tweet_analysis(tweet):
 
-    return emotion_value
+# ツイートを形態素解析で分割する
+def tweet_mecab_analysis(tweet):
+    divided_tweet = mecab.parse(tweet)
+    divided_tweet_lines = divided_tweet.split('\n')
+    divided_tweet_lines = divided_tweet_lines[0:-2]
+    diclist = []
+    for word in divided_tweet_lines:
+        l = re.split('\t|,',word)
+        d = {'Surface':l[0], 'POS1':l[1], 'POS2':l[2], 'BaseForm':l[3]}
+        diclist.append(d)
+    return(diclist)
+
 
 # twitterにポストする
 def tweet(tweet):
