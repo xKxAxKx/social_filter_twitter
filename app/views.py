@@ -33,7 +33,7 @@ def home(request):
             tweet = request.POST['tweet']
             emotion_value = tweet_analysis(tweet)
 
-            print(emotion_value)
+
 
             return render(request,
                 'home.html',
@@ -50,10 +50,9 @@ def home(request):
 
 # ツイートを解析し、数値でネガティブ値を取得する
 def tweet_analysis(tweet):
-    pass
-    # return emotion_value
 
+    return emotion_value
 
-# 実際にtwitterにポストする関数
+# twitterにポストする
 def tweet(tweet):
     pass
