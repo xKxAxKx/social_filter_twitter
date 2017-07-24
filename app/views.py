@@ -20,7 +20,12 @@ import MeCab
 mecab = MeCab.Tagger('-Ochasen')
 import pandas as pd
 # pn_ja.dic.txtはフルパスで指定
-pn_df = pd.read_csv('/Users/user/Dev/kakutani/social_filter_twitter/app/pn_ja.dic.txt',\
+# pn_df = pd.read_csv('/Users/user/Dev/kakutani/social_filter_twitter/app/pn_ja.dic.txt',\
+#                     sep=':',
+#                     encoding='utf-8',
+#                     names=('Word','Reading','POS', 'PN')
+#                    )
+pn_df = pd.read_csv('/Users/hiromasakakutani/Dev/kakutani/social_filter_twitter/app/pn_ja.dic.txt',\
                     sep=':',
                     encoding='utf-8',
                     names=('Word','Reading','POS', 'PN')

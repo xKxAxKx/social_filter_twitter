@@ -83,6 +83,8 @@ SOCIAL_AUTH_TWITTER_SECRET = ''
 ACCESS_TOKEN = ''
 ACCESS_TOKEN_SECRET = ''
 
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+
 LOGIN_URL = '/'
 SOCIAL_AUTH_LOGIN_URL = '/'
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/home'
@@ -91,9 +93,12 @@ SOCIAL_AUTH_DISCONNECT_REDIRECT_URL = '/logout'
 WSGI_APPLICATION = 'social_filter_twitter.wsgi.application'
 
 SOCIAL_AUTH_PIPELINE = [
-    'social_core.pipeline.social_auth.social_uid',
+    'social.pipeline.social_auth.social_uid',
     'social_core.pipeline.social_auth.social_user',
     'social_core.pipeline.user.get_username',
+    # 'social.pipeline.social_auth.associate_user',
+    # 'social.pipeline.social_auth.load_extra_data',
+    # 'social.pipeline.user.user_details',
 ]
 
 # Database
