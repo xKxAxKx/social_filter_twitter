@@ -5,3 +5,4 @@ requests_oauthlib
 python-social-auth[django]
 mecab-python3
 pandas
+twitter

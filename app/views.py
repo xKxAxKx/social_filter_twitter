@@ -7,13 +7,13 @@ import requests
 import sys, codecs
 # sys.stdout = codecs.getwriter("utf-8")(sys.stdout)
 from social_django.models import UserSocialAuth
-
-
+import twitter
 from django.http import HttpResponseRedirect
 from django.http.response import HttpResponse
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
 from django import forms
 from .forms import TweetForm
 
@@ -44,6 +44,9 @@ def index(request):
 @login_required
 def home(request):
     account_name = request.user.username
+    social_account = UserSocialAuth.objects.get(user_id=request.user.id)
+    user_oauth_token = social_account.extra_data['access_token']['oauth_token']
+    user_oauth_token_sercret = social_account.extra_data['access_token']['oauth_token_secret']
     form = TweetForm
 
     if request.method == 'POST':
@@ -54,14 +57,12 @@ def home(request):
             tweet_pnvalue_list = add_pnvalue(analyzed_tweet)
             tweet_score = get_tweet_score(tweet_pnvalue_list)
 
-            if tweet_score == -0.022933666666666668 or tweet_score <= -0.661141:
+            if tweet_score <= -0.66:
                 tweet = "にゃーん"
 
+            tweet_post(tweet, user_oauth_token, user_oauth_token_sercret)
+
             message = '「{}」とツイートしました'.format(tweet)
-            # if tweet(tweet):
-            #     message = '「{}」とツイートしました'.format(tweet)
-            # else:
-            #     message = "ツイートに失敗しました"
 
             return render(request,
                 'home.html',
@@ -121,5 +122,11 @@ def mean(numbers):
 
 
 # twitterにポストする
-def tweet(tweet):
-    return True
+def tweet_post(tweet, user_oauth_token, user_oauth_token_sercret):
+    auth = twitter.OAuth(consumer_key = settings.SOCIAL_AUTH_TWITTER_KEY,
+                     consumer_secret = settings.SOCIAL_AUTH_TWITTER_SECRET,
+                     token = user_oauth_token,
+                     token_secret = user_oauth_token_sercret)
+
+    t = twitter.Twitter(auth = auth)
+    t.statuses.update(status = tweet)
