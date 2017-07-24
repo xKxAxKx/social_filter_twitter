@@ -6,6 +6,8 @@ import os
 import requests
 import sys, codecs
 # sys.stdout = codecs.getwriter("utf-8")(sys.stdout)
+from social_django.models import UserSocialAuth
+
 
 from django.http import HttpResponseRedirect
 from django.http.response import HttpResponse
