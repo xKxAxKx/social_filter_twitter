@@ -21,13 +21,10 @@ from .forms import TweetForm
 import MeCab
 mecab = MeCab.Tagger('-Ochasen')
 import pandas as pd
-# pn_ja.dic.txtはフルパスで指定
-# pn_df = pd.read_csv('/Users/user/Dev/kakutani/social_filter_twitter/app/pn_ja.dic.txt',\
-#                     sep=':',
-#                     encoding='utf-8',
-#                     names=('Word','Reading','POS', 'PN')
-#                    )
-pn_df = pd.read_csv('/Users/hiromasakakutani/Dev/kakutani/social_filter_twitter/app/pn_ja.dic.txt',\
+
+PN_TXT= 'pn_ja.dic.txt'
+
+pn_df = pd.read_csv(PN_TXT,\
                     sep=':',
                     encoding='utf-8',
                     names=('Word','Reading','POS', 'PN')
@@ -57,7 +54,7 @@ def home(request):
             tweet_pnvalue_list = add_pnvalue(analyzed_tweet)
             tweet_score = get_tweet_score(tweet_pnvalue_list)
 
-            if tweet_score == -0.41375900000000004 or tweet_score <= -0.661141:
+            if tweet_score == -0.022933666666666668 or tweet_score <= -0.661141:
                 tweet = "にゃーん"
 
             message = '「{}」とツイートしました'.format(tweet)
