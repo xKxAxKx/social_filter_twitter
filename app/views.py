@@ -151,7 +151,6 @@ def tweet_post(tweet, user_oauth_token, user_oauth_token_sercret):
 def add_nyaan_tweet(tweet, t):
     status = False
     for i in range(15):
-        j = 1
         tweet += "にゃーん"
         try:
             t.statuses.update(status = tweet)
