@@ -53,16 +53,13 @@ def home(request):
         form = TweetForm(request.POST)
         if form.is_valid():
             tweet = request.POST['tweet']
-            analyzed_tweet = tweet_mecab_analysis(tweet)
-            tweet_pnvalue_list = add_pnvalue(analyzed_tweet)
-            tweet_score = get_tweet_score(tweet_pnvalue_list)
 
-            if tweet_score <= -0.66:
-                tweet = "にゃーん"
+            tweet = tweet_post(tweet, user_oauth_token, user_oauth_token_sercret)
 
-            tweet_post(tweet, user_oauth_token, user_oauth_token_sercret)
-
-            message = '「{}」とツイートしました'.format(tweet)
+            if tweet:
+                message = '「{}」とツイートしました'.format(tweet)
+            else:
+                message = 'ツイートが失敗しました'
 
             return render(request,
                 'home.html',
@@ -129,4 +126,40 @@ def tweet_post(tweet, user_oauth_token, user_oauth_token_sercret):
                      token_secret = user_oauth_token_sercret)
 
     t = twitter.Twitter(auth = auth)
-    t.statuses.update(status = tweet)
+
+    analyzed_tweet = tweet_mecab_analysis(tweet)
+    tweet_pnvalue_list = add_pnvalue(analyzed_tweet)
+    tweet_score = get_tweet_score(tweet_pnvalue_list)
+
+    if tweet_score <= -0.66:
+        tweet = "にゃーん"
+
+    t = twitter.Twitter(auth = auth)
+
+    try:
+        t.statuses.update(status = tweet)
+        return tweet
+    except:
+        if tweet.startswith("にゃーん"):
+            tweet = add_nyaan_tweet(tweet, t)
+            return tweet
+        else:
+            return None
+
+
+# "にゃーん"を追加する
+def add_nyaan_tweet(tweet, t):
+    status = False
+    for i in range(15):
+        j = 1
+        tweet += "にゃーん"
+        try:
+            t.statuses.update(status = tweet)
+            break
+        except:
+            continue
+
+    if i <= 15:
+        return tweet
+    else:
+        return None
