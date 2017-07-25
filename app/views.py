@@ -61,6 +61,7 @@ def home(request):
             else:
                 message = 'ツイートが失敗しました'
 
+            form = TweetForm
             return render(request,
                 'home.html',
                 dict(account_name = account_name, form = form, message = message)
@@ -83,11 +84,12 @@ def tweet_mecab_analysis(tweet):
     diclist = []
     for word in divided_tweet_lines:
         l = re.split('\t|,',word)
-        d = {'Surface':l[0], 'POS1':l[1], 'POS2':l[2], 'BaseForm':l[3]}
+        d = {'Surface':l[0], 'POS1':l[1], 'POS2':l[2], 'POS3':l[3]}
         diclist.append(d)
     return(diclist)
 
 
+# 形態素解析の結果をpnにマッチするように分割
 def add_pnvalue(diclist_old):
     diclist_new = []
     for word in diclist_old:
@@ -101,6 +103,7 @@ def add_pnvalue(diclist_old):
     return(diclist_new)
 
 
+# ツイートのネガポジ値を判定する関数
 def get_tweet_score(diclist):
     pn_list = []
     for word in diclist:
@@ -114,51 +117,45 @@ def get_tweet_score(diclist):
     return(score)
 
 
+# 平均値を出す関数
 def mean(numbers):
     return float(sum(numbers)) / max(len(numbers), 1)
 
 
-# twitterにポストする
+# twitterにポストする関数
 def tweet_post(tweet, user_oauth_token, user_oauth_token_sercret):
     auth = twitter.OAuth(consumer_key = settings.SOCIAL_AUTH_TWITTER_KEY,
                      consumer_secret = settings.SOCIAL_AUTH_TWITTER_SECRET,
                      token = user_oauth_token,
                      token_secret = user_oauth_token_sercret)
-
     t = twitter.Twitter(auth = auth)
 
+    # ツイートのネガポジ判定&ツイートの差し替え
+    # スコア値は微調整が必要だな...
     analyzed_tweet = tweet_mecab_analysis(tweet)
     tweet_pnvalue_list = add_pnvalue(analyzed_tweet)
     tweet_score = get_tweet_score(tweet_pnvalue_list)
-
     if tweet_score <= -0.66:
         tweet = "にゃーん"
 
-    t = twitter.Twitter(auth = auth)
-
+    # 実際にツイートしてみる
+    # 例外が発生した場合、tweet=にゃーんだったらにゃーんを追加して再チャレンジ
+    # にゃーん以外だったらNoneで返す(エラーの内容は問わず)
     try:
         t.statuses.update(status = tweet)
         return tweet
     except:
         if tweet.startswith("にゃーん"):
-            tweet = add_nyaan_tweet(tweet, t)
-            return tweet
+            for i in range(1, 10):
+                if i == 10:
+                    return None
+                    break
+                else:
+                    tweet += "にゃーん"
+                try:
+                    t.statuses.update(status = tweet)
+                    return tweet
+                except:
+                    continue
         else:
             return None
-
-
-# "にゃーん"を追加する
-def add_nyaan_tweet(tweet, t):
-    status = False
-    for i in range(15):
-        tweet += "にゃーん"
-        try:
-            t.statuses.update(status = tweet)
-            break
-        except:
-            continue
-
-    if i <= 15:
-        return tweet
-    else:
-        return None
