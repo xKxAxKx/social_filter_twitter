@@ -1,9 +1,8 @@
-<h2>社会性フィルター付きTwitterクライアント</h2>
-
+{% extends "base.html" %}
+{% block content %}
 <p>@{{ account_name }}でログインしています</p>
 <button type="button" onclick="location.href='{% url 'logout' %}'">ログアウト</button>
 <hr>
-<!-- 未ログイン時は非表示 -->
 <form method="post">
   {{ form.as_p }}
   {% csrf_token %}
@@ -12,6 +11,5 @@
 {% if message %}
   <p>{{ message }}</p>
 {% endif %}
-<hr>
-<small>©︎2017 Hiromasa Kakutani</small><br>
-<small>連絡先:pekepooooong[a]gmail.com</small>
+
+{% endblock content %}
