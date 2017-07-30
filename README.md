@@ -10,3 +10,9 @@ $ pip install -r requirement.txt
 ```
 $ python manage.py runserver --settings=social_filter_twitter.local_settings
 ```
+
+### Run Djago(Prod)
+
+```
+$ python manage.py runserver --settings=social_filter_twitter.prod_settings
+```
