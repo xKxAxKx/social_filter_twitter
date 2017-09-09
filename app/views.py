@@ -20,15 +20,16 @@ from .forms import TweetForm
 # 形態素解析関連
 import MeCab
 mecab = MeCab.Tagger('-Ochasen')
-import pandas as pd
+import pandas
 
 PN_TXT= 'pn_ja.dic.txt'
 
-pn_df = pd.read_csv(PN_TXT,\
+pn_df = pandas.read_csv(PN_TXT,\
                     sep=':',
                     encoding='utf-8',
                     names=('Word','Reading','POS', 'PN')
                    )
+
 # PN Tableをデータフレームからdict型に変換しておく
 word_list = list(pn_df['Word'])
 pn_list = list(pn_df['PN'])  # 中身の型はnumpy.float64
@@ -86,6 +87,7 @@ def tweet_mecab_analysis(tweet):
         l = re.split('\t|,',word)
         d = {'Surface':l[0], 'POS1':l[1], 'POS2':l[2], 'POS3':l[3]}
         diclist.append(d)
+
     return(diclist)
 
 
