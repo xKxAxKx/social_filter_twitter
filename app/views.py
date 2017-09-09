@@ -80,8 +80,8 @@ def home(request):
 # ツイートを形態素解析で分割する
 def tweet_mecab_analysis(tweet):
     divided_tweet = mecab.parse(tweet)
-    divided_tweet_lines = divided_tweet.split('\n')
-    divided_tweet_lines = divided_tweet_lines[0:-2]
+    divided_tweet_split = divided_tweet.split('\n') # 形態素解析した文書を
+    divided_tweet_lines = divided_tweet_split[0:-2] # divided_tweet_splitから'EOS', ''を除去
     diclist = []
     for word in divided_tweet_lines:
         l = re.split('\t|,',word)
