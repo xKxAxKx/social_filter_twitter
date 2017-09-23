@@ -137,7 +137,7 @@ def tweet_post(tweet, user_oauth_token, user_oauth_token_sercret):
     analyzed_tweet = tweet_mecab_analysis(tweet)
     tweet_pnvalue_list = add_pnvalue(analyzed_tweet)
     tweet_score = get_tweet_score(tweet_pnvalue_list)
-    if tweet_score <= -0.50 or tweet_score == -0.022933666666666668:
+    if tweet_score <= -0.50:
         tweet = "にゃーん"
 
     # 実際にツイートしてみる
