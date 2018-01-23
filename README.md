@@ -1,10 +1,9 @@
-### NOTICE!
-UNDER DEVELOPMENT
+## これは何か
+社会性フィルターが実装されたTwitterクライアントです
 
-### Install package
-```
-$ pip install -r requirement.txt
-```
+## 社会性フィルターとは何か
+これです
+https://twitter.com/sh4869sh/status/767244989503901696
 
 ### Run Django(Local)
 ```
